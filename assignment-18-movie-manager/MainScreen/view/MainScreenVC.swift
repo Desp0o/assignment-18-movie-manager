@@ -12,7 +12,7 @@ class MainScreenVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .red
+        view.backgroundColor = .purplePrimary
     }
     
 }
