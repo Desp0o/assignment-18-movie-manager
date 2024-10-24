@@ -14,5 +14,5 @@ class MainScreenVC: UIViewController {
 
         view.backgroundColor = .purplePrimary
     }
-    
+
 }
