@@ -41,11 +41,12 @@ extension MainScreenVC: UITableViewDataSource {
         tableStack.addArrangedSubview(tableView)
         tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
         tableView.dataSource = self
+        tableView.showsVerticalScrollIndicator = false
         
         NSLayoutConstraint.activate([
             tableStack.topAnchor.constraint(equalTo: view.topAnchor),
             tableStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            tableStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             tableStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
