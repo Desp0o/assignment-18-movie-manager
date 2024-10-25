@@ -10,6 +10,7 @@ import Foundation
 
 final class FavoriteVC: UIViewController {
     private let headerLabel = UILabel()
+    private let greyBar = CALayer()
     private let favouriteMoviesCollectionView: UICollectionView = {
         let collectionLayout = UICollectionViewFlowLayout()
         collectionLayout.scrollDirection = .vertical
@@ -33,8 +34,16 @@ final class FavoriteVC: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = .white
+        setupGreyBar()
         setupHeaderLabel()
         setupFavouriteMoviesCollectionView()
+    }
+    
+    private func setupGreyBar() {
+        view.layer.addSublayer(greyBar)
+        let barWidth = view.bounds.width * 0.3
+        greyBar.backgroundColor = UIColor(named: "greyBar")?.cgColor
+        greyBar.frame = CGRect(x: 0, y: 0, width: barWidth, height: view.bounds.height)
     }
     
     private func setupHeaderLabel() {
@@ -43,6 +52,7 @@ final class FavoriteVC: UIViewController {
         //TODO: - Configure header
         headerLabel.text = "temporary text"
         headerLabel.textAlignment = .center
+        headerLabel.textColor = .black
         
         NSLayoutConstraint.activate([
             headerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -71,7 +81,8 @@ extension FavoriteVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavouriteMoviesCollectionViewCell", for: indexPath) as! FavouriteMoviesCollectionViewCell
-
+        let currentMovie = movieViewModel.singleMovie(at: indexPath.row)
+        cell.configureCell(with: currentMovie)
         return cell
     }
 }
