@@ -10,10 +10,10 @@ import UIKit
 final class DetailsVC: UIViewController {
     private let navigationView = UIStackView()
     private let customBackButton = UIButton()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupUI()
     }
     
@@ -26,21 +26,20 @@ final class DetailsVC: UIViewController {
         view.addSubview(navigationView)
         
         navigationView.translatesAutoresizingMaskIntoConstraints = false
+        navigationView.isLayoutMarginsRelativeArrangement = true
+        navigationView.layoutMargins = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0)
         
         NSLayoutConstraint.activate([
-            navigationView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+            navigationView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            navigationView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
         ])
     }
     
     private func setupCustomBackButton() {
         navigationView.addArrangedSubview(customBackButton)
-
+        
         customBackButton.setImage(UIImage(named: "BackIcon"), for: .normal)
         customBackButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            customBackButton.leadingAnchor.constraint(equalTo: navigationView.leadingAnchor, constant: 24)
-        ])
         
         customBackButton.addAction(UIAction(handler: { [weak self] action in
             self?.navigationController?.popViewController(animated: true)
