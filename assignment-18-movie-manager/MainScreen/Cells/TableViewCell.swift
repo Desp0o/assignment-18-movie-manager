@@ -43,6 +43,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     private func setupUI() {
         self.backgroundColor = .clear
         self.selectionStyle = .none
+        
         setupCellMainStack()
         setupPoster()
         setupMovieInfoStack()
@@ -139,7 +140,6 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         
         collectionView.reloadData()
     }
-    
 }
 
 extension TableViewCell {

@@ -32,7 +32,6 @@ class MainScreenVC: UIViewController {
 extension MainScreenVC: UITableViewDataSource {
     private func setupTableStack() {
         view.addSubview(tableStack)
-        
         tableStack.translatesAutoresizingMaskIntoConstraints = false
         
         setupPopularTitle()

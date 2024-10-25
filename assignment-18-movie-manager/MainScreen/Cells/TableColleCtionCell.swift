@@ -19,17 +19,17 @@ final class TableColleCtionCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-
-    
+        
     private func setupCellUI() {
         contentView.addSubview(stack)
+        
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.isLayoutMarginsRelativeArrangement = true
         stack.layoutMargins = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
         stack.clipsToBounds = true
         stack.layer.cornerRadius = 12
         stack.backgroundColor = .purpleSecondary
+        
         NSLayoutConstraint.activate([
             stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
@@ -37,6 +37,7 @@ final class TableColleCtionCell: UICollectionViewCell {
         
         stack.addArrangedSubview(genre)
         genre.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             genre.centerYAnchor.constraint(equalTo: stack.centerYAnchor)
         ])
