@@ -18,6 +18,7 @@ class MainScreenVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = true
 
         setupTestButton()
         view.backgroundColor = .purplePrimary
