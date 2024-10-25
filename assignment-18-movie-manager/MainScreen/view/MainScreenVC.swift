@@ -8,43 +8,57 @@
 import UIKit
 
 class MainScreenVC: UIViewController {
-    
-    let button: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
+    let viewModel = Movie_ViewModel()
+    let tableStack = UIStackView()
+    let tableView: UITableView = {
+        let table = UITableView()
+        table.backgroundColor = .clear
+        table.separatorStyle = .none
+        table.translatesAutoresizingMaskIntoConstraints = false
         
-        return button
+        return table
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
+        view.backgroundColor = .white
 
-        setupTestButton()
-        view.backgroundColor = .purplePrimary
+        setupTableStack()
+    }
+}
+
+extension MainScreenVC: UITableViewDataSource {
+    private func setupTableStack() {
+        view.addSubview(tableStack)
+        
+        tableStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        setupTableView()
     }
     
-    
-//    ეს ღილაკი და მისი ყველა კონფიგურაცია ინიზიალიზაცია არის იმისთვის მხოლოდ ვინც დაიწყებს დეტალებს იქ რო გადავიდეს
-    private func setupTestButton() {
-        view.addSubview(button)
+    private func setupTableView() {
+        tableStack.addArrangedSubview(tableView)
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
+        tableView.dataSource = self
         
-        button.setTitle("Go", for: .normal)
-        button.backgroundColor = .systemBlue
-
         NSLayoutConstraint.activate([
-            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            button.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            button.widthAnchor.constraint(equalToConstant: 100),
-            button.heightAnchor.constraint(equalToConstant: 100)
+            tableStack.topAnchor.constraint(equalTo: view.topAnchor),
+            tableStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            tableStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-        
-        button.addAction(UIAction(handler: { [weak self] action in
-            let detailVC = DetailsVC()
-            detailVC.hidesBottomBarWhenPushed = true
-            
-            self?.navigationController?.pushViewController(detailVC, animated: true)
-        }), for: .touchUpInside)
     }
-
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.numberOfMovie
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? TableViewCell
+        let currentMovie = viewModel.singleMovie(at: indexPath.row)
+        cell?.configureTbaleViewCell(currentMovie: currentMovie)
+        
+        return cell ?? UITableViewCell()
+    }
 }

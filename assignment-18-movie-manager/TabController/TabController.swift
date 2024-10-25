@@ -20,7 +20,6 @@ class TabController: UITabBarController {
         self.tabBar.backgroundColor = .white
         self.tabBar.itemSpacing = 135
         self.tabBar.itemPositioning = .centered
-        
         self.setViewControllers([home, detailsScreen], animated: true )
     }
     
