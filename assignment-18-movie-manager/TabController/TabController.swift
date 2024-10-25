@@ -17,10 +17,13 @@ class TabController: UITabBarController {
         let home = createTab(iconActive: "filmRollActive", iconInactive: "filmRollDeactive", vc: MainScreenVC())
         let detailsScreen = createTab(iconActive: "BookmarkActive", iconInactive: "bookmarkInactive", vc: FavoriteVC())
         
-        self.tabBar.backgroundColor = .white
-        self.tabBar.itemSpacing = 135
-        self.tabBar.itemPositioning = .centered
-        self.setViewControllers([home, detailsScreen], animated: true )
+        tabBar.layer.shadowOffset = CGSize(width: 0, height: 0)
+        tabBar.layer.shadowRadius = 10
+        tabBar.layer.shadowColor = UIColor.black.cgColor
+        tabBar.layer.shadowOpacity = 0.3
+        tabBar.itemSpacing = 135
+        tabBar.itemPositioning = .centered
+        setViewControllers([home, detailsScreen], animated: true )
     }
     
     private func createTab(iconActive: String, iconInactive: String, vc: UIViewController) -> UINavigationController {
