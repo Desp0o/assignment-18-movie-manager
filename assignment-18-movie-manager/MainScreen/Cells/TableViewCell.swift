@@ -24,7 +24,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         collectionLayout.minimumLineSpacing = 8
         collectionLayout.scrollDirection = .horizontal
         
-        collection = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
+        collection = UICollectionView(frame: CGRect(x: 20, y: 20, width: 100, height: 60), collectionViewLayout: collectionLayout)
         collection.translatesAutoresizingMaskIntoConstraints = false
         
         return collection
@@ -79,18 +79,32 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         ])
     }
     
+    private func setupTitle() {
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.numberOfLines = 2
+        title.lineBreakMode = .byWordWrapping
+        
+        movieInfoStack.addArrangedSubview(title)
+        
+        NSLayoutConstraint.activate([
+            title.widthAnchor.constraint(lessThanOrEqualToConstant: 117),
+            title.heightAnchor.constraint(greaterThanOrEqualToConstant: 10)
+        ])
+    }
+    
     private func setupMovieInfoStack() {
         cellStack.addArrangedSubview(movieInfoStack)
         
         movieInfoStack.translatesAutoresizingMaskIntoConstraints = false
         movieInfoStack.isLayoutMarginsRelativeArrangement = true
-        movieInfoStack.layoutMargins = UIEdgeInsets(top: 6, left: 0, bottom: 12, right: 0)
+        movieInfoStack.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 12, right: 0)
         
         movieInfoStack.axis = .vertical
         movieInfoStack.spacing = 8
+        movieInfoStack.alignment = .leading
         movieInfoStack.distribution = .fill
         
-        movieInfoStack.addArrangedSubview(title)
+        setupTitle()
         
         let imdbStack = generateStackWithIcon(iconName: "ratingStar", uiLabel: imdb)
         movieInfoStack.addArrangedSubview(imdbStack)
@@ -99,8 +113,19 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         
         let durationStack = generateStackWithIcon(iconName: "durationIcon", uiLabel: duration)
         movieInfoStack.addArrangedSubview(durationStack)
+        durationStack.translatesAutoresizingMaskIntoConstraints = false
+        
+//        let space = UILabel()
+//        movieInfoStack.addArrangedSubview(space)
+//        space.backgroundColor = .cyan
+//        space.translatesAutoresizingMaskIntoConstraints = false
+//        space.heightAnchor.constraint(equalToConstant: 1).isActive = true
+//        space.leftAnchor.constraint(equalTo: movieInfoStack.leftAnchor).isActive = true
+//        space.rightAnchor.constraint(equalTo: movieInfoStack.rightAnchor).isActive = true
+
+
     }
-    
+
     private func generateStackWithIcon(iconName: String, uiLabel: UILabel) -> UIStackView {
         let stack = UIStackView()
         let icon = UIImageView()
@@ -129,6 +154,11 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         collectionView.register(TableColleCtionCell.self, forCellWithReuseIdentifier: "TableColleCtionCell")
         collectionView.showsHorizontalScrollIndicator = false
         movieInfoStack.addArrangedSubview(collectionView)
+
+        NSLayoutConstraint.activate([
+            collectionView.leadingAnchor.constraint(equalTo: movieInfoStack.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: movieInfoStack.trailingAnchor),
+        ])
     }
     
     func configureTbaleViewCell(currentMovie: Movie_Model) {
