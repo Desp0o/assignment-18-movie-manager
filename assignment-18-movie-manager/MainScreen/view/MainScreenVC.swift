@@ -53,6 +53,7 @@ extension MainScreenVC: UITableViewDataSource {
         tableStack.addArrangedSubview(tableView)
         tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.showsVerticalScrollIndicator = false
         
         NSLayoutConstraint.activate([
@@ -73,5 +74,12 @@ extension MainScreenVC: UITableViewDataSource {
         cell?.configureTbaleViewCell(currentMovie: currentMovie)
         
         return cell ?? UITableViewCell()
+    }
+}
+
+extension MainScreenVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let currentMovie = viewModel.singleMovie(at: indexPath.row)
+        print(currentMovie)
     }
 }
