@@ -49,10 +49,10 @@ final class FavoriteVC: UIViewController {
     private func setupHeaderLabel() {
         headerLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(headerLabel)
-        //TODO: - Configure header
-        headerLabel.text = "temporary text"
+        headerLabel.text = "Favourites"
+        headerLabel.font = UIFont(name: "Merriweather-Black", size: 16)
         headerLabel.textAlignment = .center
-        headerLabel.textColor = .black
+        headerLabel.textColor = .darkBlue
         
         NSLayoutConstraint.activate([
             headerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -81,8 +81,8 @@ extension FavoriteVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavouriteMoviesCollectionViewCell", for: indexPath) as! FavouriteMoviesCollectionViewCell
-        let currentMovie = movieViewModel.singleMovie(at: indexPath.row)
-        cell.configureCell(with: currentMovie)
+//        let currentMovie = movieViewModel.singleMovie(at: indexPath.row)
+//        cell.configureCell(with: currentMovie)
         return cell
     }
 }
