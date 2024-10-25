@@ -21,6 +21,10 @@ final class DetailsVC: UIViewController {
     private let viewForIMDB = UIView()
     private let starSign = UIImageView()
     private let imbdLable = UILabel()
+    private let stackViewForDetails = UIStackView()
+    private let viewForDescription = UIView()
+    private let descriptionLable = UILabel()
+    private var descriptionTextLable = UILabel()
     
     var collecrionViewForGenre: UICollectionView = {
         let collection: UICollectionView
@@ -52,6 +56,10 @@ final class DetailsVC: UIViewController {
         setUpImageView()
         setUpimdbLable()
         setUpcollecrionViewForGenre()
+        setUpstackViewForDetails()
+        setUpViewForDescription()
+        setUpDescriprionLable()
+        setUpDesctiptionLableText()
     }
     
     private func setUpbackDropImageView() {
@@ -87,7 +95,7 @@ final class DetailsVC: UIViewController {
         backButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
             backButton.heightAnchor.constraint(equalToConstant: 24),
             backButton.widthAnchor.constraint(equalTo: backButton.heightAnchor, multiplier: 1.0)
@@ -190,11 +198,102 @@ final class DetailsVC: UIViewController {
             collecrionViewForGenre.topAnchor.constraint(equalTo: viewForTitleFavRanking.bottomAnchor, constant: 16),
             collecrionViewForGenre.leadingAnchor.constraint(equalTo: viewForTitleFavRanking.leadingAnchor),
             collecrionViewForGenre.trailingAnchor.constraint(equalTo: viewForTitleFavRanking.trailingAnchor),
-            collecrionViewForGenre.heightAnchor.constraint(equalToConstant: 18)
+            collecrionViewForGenre.heightAnchor.constraint(equalToConstant: 30)
         ])
         
         collecrionViewForGenre.register(GenreCell.self, forCellWithReuseIdentifier: "GenreCell")
         collecrionViewForGenre.dataSource = self
+    }
+    
+    private func setUpstackViewForDetails() {
+        viewForTitleFavRanking.addSubview(stackViewForDetails)
+        stackViewForDetails.translatesAutoresizingMaskIntoConstraints = false
+        stackViewForDetails.axis = .horizontal
+        stackViewForDetails.alignment = .fill
+        stackViewForDetails.distribution = .equalCentering
+        
+        NSLayoutConstraint.activate([
+            stackViewForDetails.topAnchor.constraint(equalTo: collecrionViewForGenre.bottomAnchor, constant: 16),
+            stackViewForDetails.leadingAnchor.constraint(equalTo: viewForTitleFavRanking.leadingAnchor),
+            stackViewForDetails.trailingAnchor.constraint(equalTo: viewForTitleFavRanking.trailingAnchor),
+            stackViewForDetails.heightAnchor.constraint(equalToConstant: 34)
+        ])
+        
+        guard let headerFont = UIFont(name: "Mulish-Regular", size: 12) else { return }
+        guard let valueFont = UIFont(name: "Mulish-Bold", size: 12) else { return }
+        
+        let lengthTitleLabel = createLabel(text: "Length", font: headerFont, textColor: .secondarytext)
+        let lengthValueLabel = createLabel(text: "2h 28min", font: valueFont, textColor: .black)
+        let lengthStackView = createVerticalStackView(subviews: [lengthTitleLabel, lengthValueLabel])
+        
+        let languageTitleLabel = createLabel(text: "Language", font: headerFont, textColor: .secondarytext)
+        let languageValueLabel = createLabel(text: "English", font: valueFont, textColor: .black)
+        let languageStackView = createVerticalStackView(subviews: [languageTitleLabel, languageValueLabel])
+        
+        let ratingTitleLabel = createLabel(text: "Rating", font: headerFont, textColor: .secondarytext)
+        let ratingValueLabel = createLabel(text: "PG-13", font: valueFont, textColor: .black)
+        let ratingStackView = createVerticalStackView(subviews: [ratingTitleLabel, ratingValueLabel])
+        
+        stackViewForDetails.addArrangedSubview(lengthStackView)
+        stackViewForDetails.addArrangedSubview(languageStackView)
+        stackViewForDetails.addArrangedSubview(ratingStackView)
+    }
+    
+    private func createLabel(text: String, font: UIFont, textColor: UIColor) -> UILabel {
+        let label = UILabel()
+        label.text = text
+        label.font = font
+        label.textColor = textColor
+        return label
+    }
+
+    private func createVerticalStackView(subviews: [UIView]) -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: subviews)
+        stackView.axis = .vertical
+        stackView.spacing = 4
+        stackView.alignment = .leading
+        return stackView
+    }
+    
+    private func setUpViewForDescription() {
+        movieDetailsView.addSubview(viewForDescription)
+        viewForDescription.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            viewForDescription.topAnchor.constraint(equalTo: stackViewForDetails.bottomAnchor, constant: 24),
+            viewForDescription.leadingAnchor.constraint(equalTo: viewForTitleFavRanking.leadingAnchor),
+            viewForDescription.trailingAnchor.constraint(equalTo: viewForTitleFavRanking.trailingAnchor),
+        ])
+    }
+    
+    private func setUpDescriprionLable() {
+        viewForDescription.addSubview(descriptionLable)
+        descriptionLable.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            descriptionLable.topAnchor.constraint(equalTo: viewForDescription.topAnchor),
+            descriptionLable.leftAnchor.constraint(equalTo: viewForDescription.leftAnchor)
+        ])
+        
+        descriptionLable.text = "Description"
+        descriptionLable.font = UIFont(name: "Merriweather-Black", size: 16)
+    }
+    
+    private func setUpDesctiptionLableText() {
+        viewForDescription.addSubview(descriptionTextLable)
+        descriptionTextLable.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            descriptionTextLable.topAnchor.constraint(equalTo: descriptionLable.bottomAnchor, constant: 8),
+            descriptionTextLable.leadingAnchor.constraint(equalTo: viewForTitleFavRanking.leadingAnchor),
+            descriptionTextLable.trailingAnchor.constraint(equalTo: viewForTitleFavRanking.trailingAnchor),
+        ])
+        
+        descriptionTextLable.text = "With Spider-Man's identity now revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear, forcing Peter to discover what it truly means to be Spider-Man."
+        descriptionTextLable.font = UIFont(name: "Mulish-Regular", size: 12)
+        descriptionTextLable.numberOfLines = 0
+        descriptionTextLable.textAlignment = .left
+        descriptionTextLable.textColor = .secondarytext
     }
     
     private func setupCustomNavigation() {

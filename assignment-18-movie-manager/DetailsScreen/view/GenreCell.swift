@@ -4,12 +4,9 @@
 //
 //  Created by nino on 10/25/24.
 //
-
 import UIKit
-
-class GenreCell: UICollectionViewCell {
-    
-    private var genreView = UIView()
+ 
+final class GenreCell: UICollectionViewCell {
     var genreLable = UILabel()
     
     override init(frame: CGRect) {
@@ -22,32 +19,21 @@ class GenreCell: UICollectionViewCell {
     }
     
     private func setUpUI() {
-        setUpGenreView()
         setUpGenreLable()
     }
     
-    private func setUpGenreView() {
-        contentView.addSubview(genreView)
-        genreView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            genreView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            genreView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            genreView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            genreView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-
-        ])
-        
-        genreView.layer.cornerRadius = 20
-        genreView.backgroundColor = .red
-    }
-    
     private func setUpGenreLable() {
-        genreView.addSubview(genreLable)
+        contentView.addSubview(genreLable)
+        
+        contentView.backgroundColor = .purpleSecondary
+        contentView.layer.cornerRadius = 10
         genreLable.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            genreLable.centerXAnchor.constraint(equalTo: genreView.centerXAnchor),
+            genreLable.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            genreLable.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            genreLable.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            genreLable.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5)
         ])
         
         genreLable.font = UIFont(name: "Mulish-Regular", size: 8)
@@ -55,4 +41,7 @@ class GenreCell: UICollectionViewCell {
         genreLable.textAlignment = .center
     }
 }
-
+ 
+#Preview {
+    DetailsVC()
+}
