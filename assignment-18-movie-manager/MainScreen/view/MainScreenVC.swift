@@ -10,6 +10,7 @@ import UIKit
 class MainScreenVC: UIViewController {
     let viewModel = Movie_ViewModel()
     let tableStack = UIStackView()
+    let popularTitle = UILabel()
     let tableView: UITableView = {
         let table = UITableView()
         table.backgroundColor = .clear
@@ -34,7 +35,19 @@ extension MainScreenVC: UITableViewDataSource {
         
         tableStack.translatesAutoresizingMaskIntoConstraints = false
         
+        setupPopularTitle()
         setupTableView()
+    }
+    
+    private func setupPopularTitle() {
+        view.addSubview(popularTitle)
+        popularTitle.configureSectionHeader(with: "Popular")
+        popularTitle.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            popularTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            popularTitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0)
+        ])
     }
     
     private func setupTableView() {
@@ -44,7 +57,7 @@ extension MainScreenVC: UITableViewDataSource {
         tableView.showsVerticalScrollIndicator = false
         
         NSLayoutConstraint.activate([
-            tableStack.topAnchor.constraint(equalTo: view.topAnchor),
+            tableStack.topAnchor.constraint(equalTo: popularTitle.bottomAnchor, constant: 16),
             tableStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             tableStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             tableStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
