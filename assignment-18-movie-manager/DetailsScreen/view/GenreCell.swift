@@ -41,7 +41,3 @@ final class GenreCell: UICollectionViewCell {
         genreLable.textAlignment = .center
     }
 }
- 
-#Preview {
-    DetailsVC()
-}

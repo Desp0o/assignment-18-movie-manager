@@ -63,8 +63,4 @@ final class ActorCell: UICollectionViewCell {
         actorName.font = UIFont(name: "Mulish-Regular", size: 12)
     }
 }
- 
-#Preview {
-    DetailsVC()
-}
 

@@ -7,15 +7,6 @@
 
 import UIKit
 
-var genre = ["ksadb", "dsadbh", "asghdv", "adsda", "ksadიჯჯოიჯოჯოb", "dsadbh", "asghdv", "adsda"]
-var actorArray = [
-    Actor_Model(name: "Tom Holland", avatar: "tomHolland"),
-    Actor_Model(name: "Zendaya", avatar: "zendaya"),
-    Actor_Model(name: "Benedict CumBerBatch", avatar: "benedict"),
-    Actor_Model(name: "Jacon Batalon", avatar: "jacon"),
-    Actor_Model(name: "Jacon Batalon", avatar: "jacon")
-]
-
 final class DetailsVC: UIViewController {
     private let navigationView = UIStackView()
     private let customBackButton = UIButton()
@@ -63,6 +54,20 @@ final class DetailsVC: UIViewController {
         setupUI()
     }
     
+    private var movie: Movie_Model
+    
+    init(backDropImage: UIImageView = UIImageView(), descriptionTextLable: UILabel = UILabel(), castLable: UILabel = UILabel(),  movie: Movie_Model) {
+        self.backDropImage = backDropImage
+        self.descriptionTextLable = descriptionTextLable
+        self.castLable = castLable
+        self.movie = movie
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private func setupUI() {
         setupCustomNavigation()
         setupCustomBackButton()
@@ -95,7 +100,7 @@ final class DetailsVC: UIViewController {
             backDropImage.heightAnchor.constraint(lessThanOrEqualToConstant: 300)
         ])
         
-        backDropImage.image = UIImage(named: "spidermanBackdrop")
+        backDropImage.image = UIImage(named: movie.backDrop)
     }
     
     private func setUpmovieDetailsView() {
@@ -152,7 +157,7 @@ final class DetailsVC: UIViewController {
             titleLable.widthAnchor.constraint(lessThanOrEqualToConstant: 198)
         ])
 
-        titleLable.text = "Spiderman: No Way Home"
+        titleLable.text = movie.title
         titleLable.font = UIFont(name: "Mulish-Bold", size: 25)
         titleLable.numberOfLines = 0
     }
@@ -160,7 +165,8 @@ final class DetailsVC: UIViewController {
     private func setUpSaveButton() {
         viewForTitleFavRanking.addSubview(saveButton)
         saveButton.translatesAutoresizingMaskIntoConstraints = false
-        let saveImage = UIImage(named: "bookmarkInactive")?.withRenderingMode(.alwaysTemplate)
+        let saveImageFav = UIImage(named: "BookmarkActive")?.withRenderingMode(.automatic)
+        let saveImageNotFav = UIImage(named: "bookmarkInactive")?.withRenderingMode(.automatic)
         
         NSLayoutConstraint.activate([
             saveButton.topAnchor.constraint(equalTo: viewForTitleFavRanking.topAnchor),
@@ -170,8 +176,22 @@ final class DetailsVC: UIViewController {
             saveButton.widthAnchor.constraint(equalTo: saveButton.heightAnchor, multiplier: 1.0)
         ])
         
-        saveButton.setImage(saveImage, for: .normal)
+        if movie.isFaved == true {
+            saveButton.setImage(saveImageFav, for: .normal)
+        } else {
+            saveButton.setImage(saveImageNotFav, for: .normal)
+        }
+        
         saveButton.imageView?.tintColor = .black
+        
+        saveButton.addAction(UIAction(handler: { [weak self] movie in
+            self?.movie.isFaved.toggle()
+            if self?.movie.isFaved == true {
+                self?.saveButton.setImage(saveImageFav, for: .normal)
+            } else {
+                self?.saveButton.setImage(saveImageNotFav, for: .normal)
+            }
+        }), for: .touchUpInside)
     }
     
     private func setUpViewForIMDB() {
@@ -208,7 +228,7 @@ final class DetailsVC: UIViewController {
             imbdLable.centerYAnchor.constraint(equalTo: viewForIMDB.centerYAnchor),
         ])
         
-        imbdLable.text = "9.1/10 IMDb"
+        imbdLable.text = "\(movie.imdb)/10 IMDb"
         imbdLable.font = UIFont(name: "Mulish-Regular", size: 12)
         imbdLable.textColor = .secondarytext
     }
@@ -245,15 +265,15 @@ final class DetailsVC: UIViewController {
         guard let valueFont = UIFont(name: "Mulish-Bold", size: 12) else { return }
         
         let lengthTitleLabel = createLabel(text: "Length", font: headerFont, textColor: .secondarytext)
-        let lengthValueLabel = createLabel(text: "2h 28min", font: valueFont, textColor: .black)
+        let lengthValueLabel = createLabel(text: movie.duration, font: valueFont, textColor: .black)
         let lengthStackView = createVerticalStackView(subviews: [lengthTitleLabel, lengthValueLabel])
         
         let languageTitleLabel = createLabel(text: "Language", font: headerFont, textColor: .secondarytext)
-        let languageValueLabel = createLabel(text: "English", font: valueFont, textColor: .black)
+        let languageValueLabel = createLabel(text: movie.language, font: valueFont, textColor: .black)
         let languageStackView = createVerticalStackView(subviews: [languageTitleLabel, languageValueLabel])
         
         let ratingTitleLabel = createLabel(text: "Rating", font: headerFont, textColor: .secondarytext)
-        let ratingValueLabel = createLabel(text: "PG-13", font: valueFont, textColor: .black)
+        let ratingValueLabel = createLabel(text: movie.rating, font: valueFont, textColor: .black)
         let ratingStackView = createVerticalStackView(subviews: [ratingTitleLabel, ratingValueLabel])
         
         stackViewForDetails.addArrangedSubview(lengthStackView)
@@ -311,7 +331,7 @@ final class DetailsVC: UIViewController {
             descriptionTextLable.trailingAnchor.constraint(equalTo: viewForTitleFavRanking.trailingAnchor),
         ])
         
-        descriptionTextLable.text = "With Spider-Man's identity now revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear, forcing Peter to discover what it truly means to be Spider-Man."
+        descriptionTextLable.text = movie.description
         descriptionTextLable.font = UIFont(name: "Mulish-Regular", size: 12)
         descriptionTextLable.numberOfLines = 0
         descriptionTextLable.textAlignment = .left
@@ -373,22 +393,24 @@ final class DetailsVC: UIViewController {
 extension DetailsVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collecrionViewForGenre {
-            genre.count
+//            genre.count
+            movie.genres.count
         } else {
-            actorArray.count
+//            actorArray.count
+            movie.cast.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == collecrionViewForGenre {
-            let curGenre = genre[indexPath.row]
+            let curGenre = movie.genres[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenreCell", for: indexPath) as? GenreCell
             
             cell?.genreLable.text = curGenre
             
             return cell ?? UICollectionViewCell()
         } else {
-            let curActor = actorArray[indexPath.row]
+            let curActor = movie.cast[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActorCell", for: indexPath) as? ActorCell
             
             cell?.actorName.text = curActor.name
@@ -399,7 +421,7 @@ extension DetailsVC: UICollectionViewDataSource {
     }
 }
 
-
-#Preview {
-    DetailsVC()
-}
+//
+//#Preview {
+//    DetailsVC()
+//}

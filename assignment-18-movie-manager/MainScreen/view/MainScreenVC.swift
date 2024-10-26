@@ -8,7 +8,6 @@
 import UIKit
 
 class MainScreenVC: UIViewController {
-    
     let button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
