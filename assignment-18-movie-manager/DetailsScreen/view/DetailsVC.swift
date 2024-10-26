@@ -112,7 +112,7 @@ final class DetailsVC: UIViewController {
             movieDetailsView.topAnchor.constraint(equalTo: view.topAnchor, constant: 240),
             movieDetailsView.rightAnchor.constraint(equalTo: view.rightAnchor),
             movieDetailsView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            movieDetailsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            movieDetailsView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         movieDetailsView.backgroundColor = .white
         movieDetailsView.layer.cornerRadius = 12
