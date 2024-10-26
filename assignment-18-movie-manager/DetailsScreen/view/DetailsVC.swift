@@ -33,6 +33,7 @@ final class DetailsVC: UIViewController {
         collectionLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         collection = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
         collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.backgroundColor = .clear
         
         return collection
     }()
@@ -45,7 +46,7 @@ final class DetailsVC: UIViewController {
         collectionLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         collection = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
         collection.translatesAutoresizingMaskIntoConstraints = false
-        
+        collection.backgroundColor = .clear
         return collection
     }()
     
@@ -97,7 +98,7 @@ final class DetailsVC: UIViewController {
             backDropImage.topAnchor.constraint(equalTo: view.topAnchor),
             backDropImage.rightAnchor.constraint(equalTo: view.rightAnchor),
             backDropImage.leftAnchor.constraint(equalTo: view.leftAnchor),
-            backDropImage.heightAnchor.constraint(lessThanOrEqualToConstant: 300)
+            backDropImage.heightAnchor.constraint(equalToConstant: 300)
         ])
         
         backDropImage.image = UIImage(named: movie.backDrop)
@@ -114,8 +115,8 @@ final class DetailsVC: UIViewController {
             movieDetailsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         movieDetailsView.backgroundColor = .white
-        movieDetailsView.layer.cornerRadius = 10
-    }
+        movieDetailsView.layer.cornerRadius = 12
+        movieDetailsView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]    }
     
     private func setUpBackButton() {
         view.addSubview(backButton)
