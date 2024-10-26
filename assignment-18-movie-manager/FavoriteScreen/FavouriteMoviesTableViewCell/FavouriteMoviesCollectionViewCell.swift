@@ -74,7 +74,7 @@ class FavouriteMoviesCollectionViewCell: UICollectionViewCell {
         posterView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(posterView)
         posterView.contentMode = .scaleAspectFill
-        posterView.clipsToBounds = true
+        
         
         NSLayoutConstraint.activate([
             posterView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -84,6 +84,11 @@ class FavouriteMoviesCollectionViewCell: UICollectionViewCell {
         ])
         
         posterView.layer.cornerRadius = 10
+        
+        posterView.layer.shadowOffset = CGSize(width: 0, height: 5)
+        posterView.layer.shadowRadius = 5
+        posterView.layer.shadowOpacity = 0.4
+        posterView.layer.shadowColor = UIColor.black.cgColor
     }
     
     private func setupStarImageView() {
