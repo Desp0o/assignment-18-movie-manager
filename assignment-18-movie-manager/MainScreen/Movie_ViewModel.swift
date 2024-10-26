@@ -6,7 +6,7 @@
 //
 
 final class Movie_ViewModel {
-     let movieArray = [
+    private let movieArray = [
         Movie_Model(
             poster: "alienPoster",
             backDrop: "AlienBackdrop",
@@ -207,7 +207,7 @@ final class Movie_ViewModel {
             isPopular: false
         )
     ]
- 
+    
     var numberOfMovie: Int {
         movieArray.count
     }

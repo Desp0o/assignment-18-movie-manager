@@ -103,14 +103,14 @@ class MainScreenVC: UIViewController {
 extension MainScreenVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let vc = Movie_ViewModel()
-        return vc.movieArray.count
+        return vc.numberOfMovie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = currentMoviesCollectionView.dequeueReusableCell(withReuseIdentifier: "CurrentMoviesCollectionViewCell", for: indexPath) as? CurrentMoviesCollectionViewCell
         
         let vc = Movie_ViewModel()
-        let movie = vc.movieArray[indexPath.row]
+        let movie = vc.singleMovie(at: indexPath.row)
         cell?.movieImage.image = UIImage(named: movie.poster)
         cell?.movieNameLabel.text = movie.title
         cell?.movieRatingLabel.text = "\(movie.imdb)/10 IMDb"
