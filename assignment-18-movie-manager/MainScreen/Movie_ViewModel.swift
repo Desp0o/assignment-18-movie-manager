@@ -215,4 +215,8 @@ final class Movie_ViewModel {
     func singleMovie(at index: Int) -> Movie_Model {
         movieArray[index]
     }
+    
+    var popularMovie: [Movie_Model] {
+        movieArray.filter { $0.isPopular }
+    }
 }

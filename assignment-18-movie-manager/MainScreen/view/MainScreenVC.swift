@@ -7,6 +7,83 @@
 
 import UIKit
 
+<<<<<<< HEAD
+class MainScreenVC: UIViewController {
+    let viewModel = Movie_ViewModel()
+    let tableStack = UIStackView()
+    let popularTitle = UILabel()
+    let tableView: UITableView = {
+        let table = UITableView()
+        table.backgroundColor = .clear
+        table.separatorStyle = .none
+        table.translatesAutoresizingMaskIntoConstraints = false
+        
+        return table
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = true
+        view.backgroundColor = .white
+
+        setupTableStack()
+    }
+}
+
+extension MainScreenVC: UITableViewDataSource {
+    private func setupTableStack() {
+        view.addSubview(tableStack)
+        tableStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        setupPopularTitle()
+        setupTableView()
+    }
+    
+    private func setupPopularTitle() {
+        view.addSubview(popularTitle)
+        popularTitle.configureSectionHeader(with: "Popular")
+        popularTitle.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            popularTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            popularTitle.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0)
+        ])
+    }
+    
+    private func setupTableView() {
+        tableStack.addArrangedSubview(tableView)
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.showsVerticalScrollIndicator = false
+        
+        NSLayoutConstraint.activate([
+            tableStack.topAnchor.constraint(equalTo: popularTitle.bottomAnchor, constant: 16),
+            tableStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            tableStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            tableStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.popularMovie.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? TableViewCell
+        let currentMovie = viewModel.popularMovie[indexPath.row]
+        cell?.configureTbaleViewCell(currentMovie: currentMovie)
+        
+        return cell ?? UITableViewCell()
+    }
+}
+
+extension MainScreenVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let currentMovie = viewModel.singleMovie(at: indexPath.row)
+        print(currentMovie)
+    }
+=======
 class MainScreenVC: UIViewController {    
     let viewTitleLabel: UILabel = {
         let title = UILabel()
@@ -109,4 +186,5 @@ extension MainScreenVC: UICollectionViewDataSource {
         cell?.movieRatingLabel.text = "\(movie.imdb)/10 IMDb"
         return cell ?? UICollectionViewCell()
     }
+>>>>>>> feature/main-screen-ui-update
 }
