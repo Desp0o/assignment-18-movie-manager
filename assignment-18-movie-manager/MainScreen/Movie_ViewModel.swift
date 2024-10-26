@@ -6,7 +6,7 @@
 //
 
 final class Movie_ViewModel {
-    private let movieArray = [
+     let movieArray = [
         Movie_Model(
             poster: "alienPoster",
             backDrop: "AlienBackdrop",

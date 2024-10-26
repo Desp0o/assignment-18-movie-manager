@@ -12,39 +12,108 @@ class MainScreenVC: UIViewController {
     let button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         return button
     }()
-
+    
+    let viewTitleLabel: UILabel = {
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.text = "MovieMan"
+        title.font = UIFont(name: "Merriweather-Black", size: 20)
+        title.textAlignment = .center
+        title.textColor = .darkBlue
+        return title
+    }()
+    
+    let currentMovieTitle: UILabel = {
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.text = "Now Showing"
+        title.font = UIFont(name: "Merriweather-Black", size: 20)
+        title.textColor = .darkBlue
+        return title
+    }()
+    
+    let currentMoviesCollectionView: UICollectionView = {
+        let collectionLayout = UICollectionViewFlowLayout()
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
+        collectionLayout.itemSize = CGSize(width: 170, height: 243)
+        collectionLayout.scrollDirection = .horizontal
+        collection.backgroundColor = .white
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        return collection
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
-
-        setupTestButton()
-        view.backgroundColor = .purplePrimary
+        setupMainView()
+        view.backgroundColor =  .white
+    }
+    
+    func setupMainView() {
+        configureViewTitleLabel()
+        configureCurrentMovieTitle()
+        configureCurrentMoviewCollectionView()
     }
     
     
-//    ეს ღილაკი და მისი ყველა კონფიგურაცია ინიზიალიზაცია არის იმისთვის მხოლოდ ვინც დაიწყებს დეტალებს იქ რო გადავიდეს
-    private func setupTestButton() {
-        view.addSubview(button)
-        
-        button.setTitle("Go", for: .normal)
-        button.backgroundColor = .systemBlue
-
+    func configureViewTitleLabel() {
+        view.addSubview(viewTitleLabel)
+        setMainViewTitleLabel()
+    }
+    
+    func setMainViewTitleLabel() {
         NSLayoutConstraint.activate([
-            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            button.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            button.widthAnchor.constraint(equalToConstant: 100),
-            button.heightAnchor.constraint(equalToConstant: 100)
+            viewTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            viewTitleLabel.leftAnchor.constraint(equalTo: view.leftAnchor),
+            viewTitleLabel.rightAnchor.constraint(equalTo: view.rightAnchor),
+            viewTitleLabel.heightAnchor.constraint(equalToConstant: 60)
         ])
-        
-        button.addAction(UIAction(handler: { [weak self] action in
-            let detailVC = DetailsVC()
-            detailVC.hidesBottomBarWhenPushed = true
-            
-            self?.navigationController?.pushViewController(detailVC, animated: true)
-        }), for: .touchUpInside)
     }
+    
+    func configureCurrentMoviewCollectionView() {
+        view.addSubview(currentMoviesCollectionView)
+        setCurrentMovieColletionView()
+        currentMoviesCollectionView.dataSource = self
+        currentMoviesCollectionView.register(CurrentMoviesCollectionViewCell.self, forCellWithReuseIdentifier: "CurrentMoviesCollectionViewCell")
+    }
+    
+    func configureCurrentMovieTitle() {
+        view.addSubview(currentMovieTitle)
+        NSLayoutConstraint.activate([
+            currentMovieTitle.topAnchor.constraint(equalTo: viewTitleLabel.bottomAnchor , constant: 16),
+            currentMovieTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
+            currentMovieTitle.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 24),
+            currentMovieTitle.heightAnchor.constraint(equalToConstant: 24)
+        ])
+    }
+    
+    func setCurrentMovieColletionView() {
+        NSLayoutConstraint.activate([
+            currentMoviesCollectionView.topAnchor.constraint(equalTo: currentMovieTitle.bottomAnchor, constant: 16),
+            currentMoviesCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            currentMoviesCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            currentMoviesCollectionView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 283/375),
+            currentMoviesCollectionView.heightAnchor.constraint(equalTo: currentMoviesCollectionView.widthAnchor, multiplier: 375/283)
+        ])
+    }
+}
 
+extension MainScreenVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let vc = Movie_ViewModel()
+        return vc.movieArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = currentMoviesCollectionView.dequeueReusableCell(withReuseIdentifier: "CurrentMoviesCollectionViewCell", for: indexPath) as? CurrentMoviesCollectionViewCell
+        
+        let vc = Movie_ViewModel()
+        let movie = vc.movieArray[indexPath.row]
+        cell?.movieImage.image = UIImage(named: movie.poster)
+        cell?.movieNameLabel.text = movie.title
+        cell?.movieRatingLabel.text = "\(movie.imdb)/10 IMDb"
+        return cell ?? UICollectionViewCell()
+    }
 }
