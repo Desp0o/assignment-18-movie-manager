@@ -15,6 +15,17 @@ class CurrentMoviesCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
+    
+      let movieImgContainer: UIView = {
+        let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
+        container.layer.shadowColor = UIColor.black.cgColor
+        container.layer.shadowOpacity = 0.3
+        container.layer.shadowOffset = CGSize(width: 0, height: 5)
+        container.layer.shadowRadius = 6
+        return container
+    }()
+    
     var movieNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -57,13 +68,22 @@ class CurrentMoviesCollectionViewCell: UICollectionViewCell {
     }
     
     func configureMovieImage() {
-        addSubview(movieImage)
+        addSubview(movieImgContainer)
+        
+        movieImgContainer.addSubview(movieImage)
+
         movieImage.clipsToBounds = true
         movieImage.layer.cornerRadius = 8
         
         NSLayoutConstraint.activate([
-            movieImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            movieImage.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
+            movieImgContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+            movieImgContainer.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            movieImgContainer.widthAnchor.constraint(equalToConstant: 143),
+            movieImgContainer.heightAnchor.constraint(equalToConstant: 212),
+            
+            
+            movieImage.topAnchor.constraint(equalTo: movieImgContainer.topAnchor, constant: 0),
+            movieImage.leftAnchor.constraint(equalTo: movieImgContainer.leftAnchor, constant: 0),
             movieImage.widthAnchor.constraint(equalToConstant: 143),
             movieImage.heightAnchor.constraint(equalToConstant: 212)
         ])
