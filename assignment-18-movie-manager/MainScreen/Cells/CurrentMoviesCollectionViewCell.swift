@@ -18,7 +18,7 @@ class CurrentMoviesCollectionViewCell: UICollectionViewCell {
     var movieNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Mulish-Bold", size: 18)
+        label.font = UIFont(name: "Mulish-Bold", size: 14)
         label.numberOfLines = 2
         label.textColor = .darkBlue
         
@@ -58,12 +58,14 @@ class CurrentMoviesCollectionViewCell: UICollectionViewCell {
     
     func configureMovieImage() {
         addSubview(movieImage)
+        movieImage.clipsToBounds = true
+        movieImage.layer.cornerRadius = 8
         
         NSLayoutConstraint.activate([
-            movieImage.topAnchor.constraint(equalTo: topAnchor),
-            movieImage.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),
-            movieImage.widthAnchor.constraint(equalToConstant: 155),
-            movieImage.heightAnchor.constraint(equalToConstant: 213)
+            movieImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            movieImage.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
+            movieImage.widthAnchor.constraint(equalToConstant: 143),
+            movieImage.heightAnchor.constraint(equalToConstant: 212)
         ])
         
     }
@@ -72,10 +74,9 @@ class CurrentMoviesCollectionViewCell: UICollectionViewCell {
         addSubview(movieNameLabel)
         
         NSLayoutConstraint.activate([
-            movieNameLabel.topAnchor.constraint(equalTo: movieImage.bottomAnchor, constant: 3),
-            movieNameLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),
-            movieNameLabel.centerXAnchor.constraint(equalTo: movieImage.centerXAnchor),
-            movieNameLabel.widthAnchor.constraint(equalToConstant: 170)
+            movieNameLabel.topAnchor.constraint(equalTo: movieImage.bottomAnchor, constant: 12),
+            movieNameLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 0),
+            movieNameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 139)
         ])
     }
     
@@ -83,10 +84,9 @@ class CurrentMoviesCollectionViewCell: UICollectionViewCell {
         addSubview(movieRatingLabel)
         
         NSLayoutConstraint.activate([
-            movieRatingLabel.topAnchor.constraint(equalTo: movieNameLabel.bottomAnchor),
-            movieRatingLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 22),
-            movieRatingLabel.centerXAnchor.constraint(equalTo: movieNameLabel.centerXAnchor),
-            movieRatingLabel.widthAnchor.constraint(equalToConstant: 155)
+            movieRatingLabel.topAnchor.constraint(equalTo: movieNameLabel.bottomAnchor, constant: 8),
+            movieRatingLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 22),
+            movieRatingLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 155)
         ])
     }
     
@@ -96,10 +96,9 @@ class CurrentMoviesCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             icon.centerYAnchor.constraint(equalTo: movieRatingLabel.centerYAnchor),
-            icon.rightAnchor.constraint(equalTo: movieRatingLabel.leftAnchor, constant: -4),
-            icon.heightAnchor.constraint(equalTo: movieRatingLabel.heightAnchor, multiplier: 1),
-            icon.leftAnchor.constraint(equalTo: leftAnchor, constant: 6)
-            
+            icon.heightAnchor.constraint(equalToConstant: 12),
+            icon.widthAnchor.constraint(equalToConstant: 12),
+            icon.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0)
         ])
     }
 }

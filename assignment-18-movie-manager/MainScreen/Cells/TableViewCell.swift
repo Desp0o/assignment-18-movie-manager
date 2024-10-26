@@ -24,7 +24,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         collectionLayout.minimumLineSpacing = 8
         collectionLayout.scrollDirection = .horizontal
         
-        collection = UICollectionView(frame: CGRect(x: 20, y: 20, width: 100, height: 60), collectionViewLayout: collectionLayout)
+        collection = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
         collection.translatesAutoresizingMaskIntoConstraints = false
         
         return collection
