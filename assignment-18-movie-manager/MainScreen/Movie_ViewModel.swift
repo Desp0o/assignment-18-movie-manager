@@ -207,7 +207,7 @@ final class Movie_ViewModel {
             isPopular: false
         )
     ]
- 
+    
     var numberOfMovie: Int {
         movieArray.count
     }
