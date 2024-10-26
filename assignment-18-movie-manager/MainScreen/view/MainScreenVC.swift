@@ -83,6 +83,7 @@ class MainScreenVC: UIViewController {
         setCurrentMovieColletionView()
         currentMoviesCollectionView.showsHorizontalScrollIndicator = false
         currentMoviesCollectionView.dataSource = self
+        currentMoviesCollectionView.delegate = self
         currentMoviesCollectionView.register(CurrentMoviesCollectionViewCell.self, forCellWithReuseIdentifier: "CurrentMoviesCollectionViewCell")
         }
     
@@ -106,7 +107,7 @@ class MainScreenVC: UIViewController {
 }
 
 
-extension MainScreenVC: UICollectionViewDataSource {
+extension MainScreenVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let vc = Movie_ViewModel()
         return vc.numberOfMovie
@@ -121,6 +122,11 @@ extension MainScreenVC: UICollectionViewDataSource {
         cell?.movieNameLabel.text = movie.title
         cell?.movieRatingLabel.text = "\(movie.imdb)/10 IMDb"
         return cell ?? UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let currentMovie = viewModel.singleMovie(at: indexPath.row)
+        print(currentMovie)
     }
 }
 
