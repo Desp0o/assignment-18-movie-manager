@@ -16,7 +16,7 @@ final class FavoriteVC: UIViewController {
         collectionLayout.scrollDirection = .vertical
         collectionLayout.minimumLineSpacing = 10
         collectionLayout.minimumInteritemSpacing = 40
-        collectionLayout.sectionInset = .init(top: 0, left: 40, bottom: 0, right: 40)
+        collectionLayout.sectionInset = .init(top: 0, left: 20, bottom: 0, right: 20)
         collectionLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
