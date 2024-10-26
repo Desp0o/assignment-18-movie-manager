@@ -126,7 +126,7 @@ extension MainScreenVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let currentMovie = viewModel.singleMovie(at: indexPath.row)
-        print(currentMovie)
+        navigationController?.pushViewController(DetailsVC(movie: currentMovie), animated: true)
     }
 }
 
@@ -188,6 +188,6 @@ extension MainScreenVC: UITableViewDataSource {
 extension MainScreenVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let currentMovie = viewModel.singleMovie(at: indexPath.row)
-        print(currentMovie)
+        navigationController?.pushViewController(DetailsVC(movie: currentMovie), animated: true)
     }
 }

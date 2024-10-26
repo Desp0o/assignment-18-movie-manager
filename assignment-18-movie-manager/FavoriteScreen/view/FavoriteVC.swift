@@ -88,5 +88,10 @@ extension FavoriteVC: UICollectionViewDataSource, UICollectionViewDelegate {
             cell.configureCell(with: currentMovie)
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let currentMovie = movieViewModel.singleMovie(at: indexPath.row)
+        navigationController?.pushViewController(DetailsVC(movie: currentMovie), animated: true)
+    }
 }
 
