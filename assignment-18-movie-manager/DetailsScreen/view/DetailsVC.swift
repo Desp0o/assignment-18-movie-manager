@@ -8,6 +8,13 @@
 import UIKit
 
 var genre = ["ksadb", "dsadbh", "asghdv", "adsda", "ksadიჯჯოიჯოჯოb", "dsadbh", "asghdv", "adsda"]
+var actorArray = [
+    Actor_Model(name: "Tom Holland", avatar: "tomHolland"),
+    Actor_Model(name: "Zendaya", avatar: "zendaya"),
+    Actor_Model(name: "Benedict CumBerBatch", avatar: "benedict"),
+    Actor_Model(name: "Jacon Batalon", avatar: "jacon"),
+    Actor_Model(name: "Jacon Batalon", avatar: "jacon")
+]
 
 final class DetailsVC: UIViewController {
     private let navigationView = UIStackView()
@@ -25,8 +32,21 @@ final class DetailsVC: UIViewController {
     private let viewForDescription = UIView()
     private let descriptionLable = UILabel()
     private var descriptionTextLable = UILabel()
+    private var castLable = UILabel()
     
     var collecrionViewForGenre: UICollectionView = {
+        let collection: UICollectionView
+        let collectionLayout = UICollectionViewFlowLayout()
+        collectionLayout.scrollDirection = .horizontal
+        collectionLayout.minimumLineSpacing = 8
+        collectionLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        collection = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        
+        return collection
+    }()
+    
+    var collecrionViewForActors: UICollectionView = {
         let collection: UICollectionView
         let collectionLayout = UICollectionViewFlowLayout()
         collectionLayout.scrollDirection = .horizontal
@@ -60,6 +80,8 @@ final class DetailsVC: UIViewController {
         setUpViewForDescription()
         setUpDescriprionLable()
         setUpDesctiptionLableText()
+        setUpCastTitle()
+        setUpCastCollectionView()
     }
     
     private func setUpbackDropImageView() {
@@ -319,22 +341,64 @@ final class DetailsVC: UIViewController {
             self?.navigationController?.popViewController(animated: true)
         }), for: .touchUpInside)
     }
+    
+    private func setUpCastTitle() {
+        view.addSubview(castLable)
+        castLable.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            castLable.topAnchor.constraint(equalTo: descriptionTextLable.bottomAnchor, constant: 24),
+            castLable.leftAnchor.constraint(equalTo: viewForTitleFavRanking.leftAnchor)
+        ])
+        
+        castLable.text = "Cast"
+        castLable.font = UIFont(name: "Merriweather-Black", size: 16)
+    }
+    
+    private func setUpCastCollectionView() {
+        view.addSubview(collecrionViewForActors)
+        
+        NSLayoutConstraint.activate([
+            collecrionViewForActors.topAnchor.constraint(equalTo: castLable.bottomAnchor, constant: 8),
+            collecrionViewForActors.leadingAnchor.constraint(equalTo: viewForTitleFavRanking.leadingAnchor),
+            collecrionViewForActors.trailingAnchor.constraint(equalTo: viewForTitleFavRanking.trailingAnchor),
+            collecrionViewForActors.heightAnchor.constraint(equalToConstant: 130)
+        ])
+        
+        collecrionViewForActors.register(ActorCell.self, forCellWithReuseIdentifier: "ActorCell")
+        collecrionViewForActors.dataSource = self
+    }
 }
 
 extension DetailsVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        genre.count
+        if collectionView == collecrionViewForGenre {
+            genre.count
+        } else {
+            actorArray.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let curGenre = genre[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenreCell", for: indexPath) as? GenreCell
-        
-        cell?.genreLable.text = curGenre
-        
-        return cell ?? UICollectionViewCell()
+        if collectionView == collecrionViewForGenre {
+            let curGenre = genre[indexPath.row]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenreCell", for: indexPath) as? GenreCell
+            
+            cell?.genreLable.text = curGenre
+            
+            return cell ?? UICollectionViewCell()
+        } else {
+            let curActor = actorArray[indexPath.row]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActorCell", for: indexPath) as? ActorCell
+            
+            cell?.actorName.text = curActor.name
+            cell?.actorAvatar.image = UIImage(named: curActor.avatar) ?? UIImage()
+            
+            return cell ?? UICollectionViewCell()
+        }
     }
 }
+
 
 #Preview {
     DetailsVC()
