@@ -11,11 +11,12 @@ import Foundation
 final class FavoriteVC: UIViewController {
     private let headerLabel = UILabel()
     private let greyBar = CALayer()
-    private let favouriteMoviesCollectionView: UICollectionView = {
+    private lazy var favouriteMoviesCollectionView: UICollectionView = {
         let collectionLayout = UICollectionViewFlowLayout()
         collectionLayout.scrollDirection = .vertical
-        collectionLayout.minimumLineSpacing = 0
-        collectionLayout.minimumInteritemSpacing = 0
+        collectionLayout.minimumLineSpacing = 10
+        collectionLayout.minimumInteritemSpacing = 40
+        collectionLayout.sectionInset = .init(top: 0, left: 40, bottom: 0, right: 40)
         collectionLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
@@ -56,8 +57,7 @@ final class FavoriteVC: UIViewController {
         
         NSLayoutConstraint.activate([
             headerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            headerLabel.heightAnchor.constraint(equalToConstant: 60),
-            headerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+            headerLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 60)
         ])
     }
     
@@ -71,6 +71,9 @@ final class FavoriteVC: UIViewController {
             favouriteMoviesCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
+        favouriteMoviesCollectionView.register(FavouriteMoviesCollectionViewCell.self, forCellWithReuseIdentifier: "FavouriteMoviesCollectionViewCell")
+        favouriteMoviesCollectionView.dataSource = self
+        favouriteMoviesCollectionView.delegate = self
     }
 }
 
@@ -81,8 +84,8 @@ extension FavoriteVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavouriteMoviesCollectionViewCell", for: indexPath) as! FavouriteMoviesCollectionViewCell
-//        let currentMovie = movieViewModel.singleMovie(at: indexPath.row)
-//        cell.configureCell(with: currentMovie)
+            let currentMovie = movieViewModel.singleMovie(at: indexPath.row)
+            cell.configureCell(with: currentMovie)
         return cell
     }
 }
