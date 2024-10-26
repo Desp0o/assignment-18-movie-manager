@@ -71,7 +71,7 @@ final class DetailsVC: UIViewController {
     private func setupUI() {
         setupCustomNavigation()
         setupCustomBackButton()
-        setUpbackDropImageView()
+        setUpbackDropImageView()z
         setUpmovieDetailsView()
         setUpBackButton()
         setUpviewForTitleFavRanking()
