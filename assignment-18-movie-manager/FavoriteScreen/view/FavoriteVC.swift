@@ -91,7 +91,11 @@ extension FavoriteVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let currentMovie = movieViewModel.singleMovie(at: indexPath.row)
-        navigationController?.pushViewController(DetailsVC(movie: currentMovie), animated: true)
+        
+        let vc = DetailsVC(movie: currentMovie)
+        vc.hidesBottomBarWhenPushed = true
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
