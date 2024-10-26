@@ -7,14 +7,7 @@
 
 import UIKit
 
-class MainScreenVC: UIViewController {
-    
-    let button: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
+class MainScreenVC: UIViewController {    
     let viewTitleLabel: UILabel = {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false

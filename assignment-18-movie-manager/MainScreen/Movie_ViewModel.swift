@@ -202,7 +202,7 @@ final class Movie_ViewModel {
             duration: "2h 22m",
             language: "English",
             rating: "R",
-            genres: ["Drama"],
+            genres: ["Drama", "Crime"],
             isFaved: false,
             isPopular: false
         )
