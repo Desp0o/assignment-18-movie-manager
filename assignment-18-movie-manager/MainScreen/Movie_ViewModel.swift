@@ -17,6 +17,10 @@ final class Movie_ViewModel {
                 Actor_Model(name: "Tom Holland", avatar: "tomHolland"),
                 Actor_Model(name: "Zendaya", avatar: "zendaya"),
                 Actor_Model(name: "Benedict", avatar: "benedict"),
+                Actor_Model(name: "Jacon", avatar: "jacon"),
+                Actor_Model(name: "Tom Holland", avatar: "tomHolland"),
+                Actor_Model(name: "Zendaya", avatar: "zendaya"),
+                Actor_Model(name: "Benedict", avatar: "benedict"),
                 Actor_Model(name: "Jacon", avatar: "jacon")
             ],
             duration: "1h 59m",
@@ -134,6 +138,10 @@ final class Movie_ViewModel {
             imdb: 8.6,
             description: "A poor family, the Kims, con their way into becoming the servants of a rich family, the Parks. But their easy life gets complicated when their deception is threatened with exposure.",
             cast: [
+                Actor_Model(name: "Tom Holland", avatar: "tomHolland"),
+                Actor_Model(name: "Zendaya", avatar: "zendaya"),
+                Actor_Model(name: "Benedict", avatar: "benedict"),
+                Actor_Model(name: "Jacon", avatar: "jacon"),
                 Actor_Model(name: "Tom Holland", avatar: "tomHolland"),
                 Actor_Model(name: "Zendaya", avatar: "zendaya"),
                 Actor_Model(name: "Benedict", avatar: "benedict"),
