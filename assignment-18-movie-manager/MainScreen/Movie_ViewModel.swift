@@ -9,7 +9,6 @@ import UIKit
 import Foundation
 
 final class Movie_ViewModel {
-    private let favouritesView = FavoriteVC()
     private var favouriteMovies = [Movie_Model]()
     private var delegate: FavouriteButtonTapped?
     private var movieArray = [
