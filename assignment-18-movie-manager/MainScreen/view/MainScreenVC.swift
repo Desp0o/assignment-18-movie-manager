@@ -71,10 +71,8 @@ class MainScreenVC: UIViewController {
     
     func setMainViewTitleLabel() {
         NSLayoutConstraint.activate([
-            viewTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            viewTitleLabel.leftAnchor.constraint(equalTo: view.leftAnchor),
-            viewTitleLabel.rightAnchor.constraint(equalTo: view.rightAnchor),
-            viewTitleLabel.heightAnchor.constraint(equalToConstant: 60)
+            viewTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            viewTitleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 60)
         ])
     }
     
