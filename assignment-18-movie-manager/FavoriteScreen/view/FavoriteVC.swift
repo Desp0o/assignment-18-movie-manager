@@ -8,10 +8,14 @@
 import UIKit
 import Foundation
 
+protocol FavouriteButtonTapped: AnyObject {
+    func reloadViewData()
+}
+
 final class FavoriteVC: UIViewController {
     private let headerLabel = UILabel()
     private let greyBar = CALayer()
-    private lazy var favouriteMoviesCollectionView: UICollectionView = {
+    private var favouriteMoviesCollectionView: UICollectionView = {
         let collectionLayout = UICollectionViewFlowLayout()
         collectionLayout.scrollDirection = .vertical
         collectionLayout.minimumLineSpacing = 10
@@ -25,12 +29,17 @@ final class FavoriteVC: UIViewController {
         return collection
     }()
     
-    let movieViewModel = Movie_ViewModel()
+    private let movieViewModel = Movie_ViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
         setupUI()
+        movieViewModel.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        movieViewModel.delegate?.reloadViewData()
     }
     
     private func setupUI() {
@@ -79,18 +88,18 @@ final class FavoriteVC: UIViewController {
 
 extension FavoriteVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        movieViewModel.numberOfMovie
+        movieViewModel.favouriteMoviesCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavouriteMoviesCollectionViewCell", for: indexPath) as! FavouriteMoviesCollectionViewCell
-            let currentMovie = movieViewModel.singleMovie(at: indexPath.row)
+        let currentMovie = movieViewModel.singleFavouriteMovie(at: indexPath.row)
             cell.configureCell(with: currentMovie)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let currentMovie = movieViewModel.singleMovie(at: indexPath.row)
+        let currentMovie = movieViewModel.singleFavouriteMovie(at: indexPath.row)
         
         let vc = DetailsVC(movie: currentMovie)
         vc.hidesBottomBarWhenPushed = true
@@ -99,3 +108,8 @@ extension FavoriteVC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
 }
 
+extension FavoriteVC: FavouriteButtonTapped {
+    func reloadViewData() { 
+        movieViewModel.reloadCollectionView(collection: favouriteMoviesCollectionView)
+    }
+}

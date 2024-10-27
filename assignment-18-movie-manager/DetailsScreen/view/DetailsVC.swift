@@ -9,7 +9,6 @@ import UIKit
 
 final class DetailsVC: UIViewController {
     private let navigationView = UIStackView()
-    private let customBackButton = UIButton()
     private var backDropImage = UIImageView()
     private let movieDetailsView = UIView()
     private let backButton = UIButton()
@@ -56,6 +55,7 @@ final class DetailsVC: UIViewController {
     }
     
     private var movie: Movie_Model
+    private var movieViewModel = Movie_ViewModel()
     
     init(backDropImage: UIImageView = UIImageView(), descriptionTextLable: UILabel = UILabel(), castLable: UILabel = UILabel(),  movie: Movie_Model) {
         self.backDropImage = backDropImage
@@ -71,7 +71,6 @@ final class DetailsVC: UIViewController {
     
     private func setupUI() {
         setupCustomNavigation()
-        setupCustomBackButton()
         setUpbackDropImageView()
         setUpmovieDetailsView()
         setUpBackButton()
@@ -93,6 +92,7 @@ final class DetailsVC: UIViewController {
     private func setUpbackDropImageView() {
         view.addSubview(backDropImage)
         backDropImage.translatesAutoresizingMaskIntoConstraints = false
+        view.bringSubviewToFront(backButton)
         
         NSLayoutConstraint.activate([
             backDropImage.topAnchor.constraint(equalTo: view.topAnchor),
@@ -123,7 +123,7 @@ final class DetailsVC: UIViewController {
         backButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -10),
             backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
             backButton.heightAnchor.constraint(equalToConstant: 24),
             backButton.widthAnchor.constraint(equalTo: backButton.heightAnchor, multiplier: 1.0)
@@ -161,6 +161,7 @@ final class DetailsVC: UIViewController {
         titleLable.text = movie.title
         titleLable.font = UIFont(name: "Mulish-Bold", size: 25)
         titleLable.numberOfLines = 0
+        titleLable.textColor = .black
     }
     
     private func setUpSaveButton() {
@@ -186,7 +187,7 @@ final class DetailsVC: UIViewController {
         saveButton.imageView?.tintColor = .black
         
         saveButton.addAction(UIAction(handler: { [weak self] movie in
-            self?.movie.isFaved.toggle()
+            self?.movieViewModel.favouritesButtonTapped(movie: self!.movie)
             if self?.movie.isFaved == true {
                 self?.saveButton.setImage(saveImageFav, for: .normal)
             } else {
@@ -235,7 +236,7 @@ final class DetailsVC: UIViewController {
     }
     
     private func setUpcollecrionViewForGenre() {
-        view.addSubview(collecrionViewForGenre)
+        movieDetailsView.addSubview(collecrionViewForGenre)
         
         NSLayoutConstraint.activate([
             collecrionViewForGenre.topAnchor.constraint(equalTo: viewForTitleFavRanking.bottomAnchor, constant: 16),
@@ -249,11 +250,11 @@ final class DetailsVC: UIViewController {
     }
     
     private func setUpstackViewForDetails() {
-        viewForTitleFavRanking.addSubview(stackViewForDetails)
+        movieDetailsView.addSubview(stackViewForDetails)
         stackViewForDetails.translatesAutoresizingMaskIntoConstraints = false
         stackViewForDetails.axis = .horizontal
         stackViewForDetails.alignment = .fill
-        stackViewForDetails.distribution = .equalCentering
+        stackViewForDetails.distribution = .fillEqually
         
         NSLayoutConstraint.activate([
             stackViewForDetails.topAnchor.constraint(equalTo: collecrionViewForGenre.bottomAnchor, constant: 16),
@@ -352,17 +353,6 @@ final class DetailsVC: UIViewController {
         ])
     }
     
-    private func setupCustomBackButton() {
-        navigationView.addArrangedSubview(customBackButton)
-        
-        customBackButton.setImage(UIImage(named: "BackIcon"), for: .normal)
-        customBackButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        customBackButton.addAction(UIAction(handler: { [weak self] action in
-            self?.navigationController?.popViewController(animated: true)
-        }), for: .touchUpInside)
-    }
-    
     private func setUpCastTitle() {
         view.addSubview(castLable)
         castLable.translatesAutoresizingMaskIntoConstraints = false
@@ -394,10 +384,8 @@ final class DetailsVC: UIViewController {
 extension DetailsVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collecrionViewForGenre {
-//            genre.count
             movie.genres.count
         } else {
-//            actorArray.count
             movie.cast.count
         }
     }
@@ -421,8 +409,3 @@ extension DetailsVC: UICollectionViewDataSource {
         }
     }
 }
-
-//
-//#Preview {
-//    DetailsVC()
-//}

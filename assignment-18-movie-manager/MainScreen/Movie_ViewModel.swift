@@ -5,8 +5,13 @@
 //  Created by Despo on 25.10.24.
 //
 
+import UIKit
+import Foundation
+
 final class Movie_ViewModel {
-    private let movieArray = [
+    static var favouriteMovies = [Movie_Model]()
+    var delegate: FavouriteButtonTapped?
+    private var movieArray = [
         Movie_Model(
             poster: "alienPoster",
             backDrop: "AlienBackdrop",
@@ -224,7 +229,26 @@ final class Movie_ViewModel {
         movieArray[index]
     }
     
-    var popularMovie: [Movie_Model] {
-        movieArray.filter { $0.isPopular }
+    var favouriteMoviesCount: Int {
+        Movie_ViewModel.favouriteMovies.count
+    }
+    
+    func singleFavouriteMovie(at index: Int) -> Movie_Model {
+        Movie_ViewModel.favouriteMovies[index]
+    }
+    
+    func favouritesButtonTapped(movie: Movie_Model) {
+        movie.isFaved.toggle()
+        if movie.isFaved {
+            Movie_ViewModel.favouriteMovies.append(movie)
+        } else {
+            Movie_ViewModel.favouriteMovies.removeAll { $0.title == movie.title}
+        }
+        delegate?.reloadViewData()
+    }
+    
+    func reloadCollectionView(collection: UICollectionView) {
+        collection.reloadData()
     }
 }
+
