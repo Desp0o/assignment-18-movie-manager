@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TableViewCell: UITableViewCell, UICollectionViewDataSource {
+final class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     private let poster = UIImageView()
     private let title = UILabel()
     private let imdb = UILabel()

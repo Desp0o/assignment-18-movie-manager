@@ -11,7 +11,7 @@ import Foundation
 final class FavoriteVC: UIViewController {
     private let headerLabel = UILabel()
     private let greyBar = CALayer()
-    private lazy var favouriteMoviesCollectionView: UICollectionView = {
+    private var favouriteMoviesCollectionView: UICollectionView = {
         let collectionLayout = UICollectionViewFlowLayout()
         collectionLayout.scrollDirection = .vertical
         collectionLayout.minimumLineSpacing = 10
@@ -98,4 +98,3 @@ extension FavoriteVC: UICollectionViewDataSource, UICollectionViewDelegate {
         navigationController?.pushViewController(vc, animated: true)
     }
 }
-

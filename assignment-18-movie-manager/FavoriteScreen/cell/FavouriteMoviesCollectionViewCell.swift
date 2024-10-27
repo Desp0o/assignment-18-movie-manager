@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-class FavouriteMoviesCollectionViewCell: UICollectionViewCell {
+final class FavouriteMoviesCollectionViewCell: UICollectionViewCell {
     private let posterView = UIImageView()
     private let titleLabel = UILabel()
     private let imdbLabel = UILabel()
@@ -22,6 +22,7 @@ class FavouriteMoviesCollectionViewCell: UICollectionViewCell {
       container.layer.shadowColor = UIColor.black.cgColor
       return container
   }()
+    private var delegate: FavouriteButtonTapped?
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -86,7 +87,7 @@ class FavouriteMoviesCollectionViewCell: UICollectionViewCell {
         posterView.contentMode = .scaleAspectFill
         
         posterView.layer.cornerRadius = 10
-        posterView.clipsToBounds = true 
+        posterView.clipsToBounds = true
         
         NSLayoutConstraint.activate([
             posterView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -116,3 +117,4 @@ class FavouriteMoviesCollectionViewCell: UICollectionViewCell {
         }
     }
 }
+

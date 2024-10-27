@@ -177,12 +177,12 @@ extension MainScreenVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.popularMovie.count
+        viewModel.numberOfMovie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? TableViewCell
-        let currentMovie = viewModel.popularMovie[indexPath.row]
+        let currentMovie = viewModel.singleMovie(at: indexPath.row)
         cell?.configureTbaleViewCell(currentMovie: currentMovie)
         
         return cell ?? UITableViewCell()

@@ -5,8 +5,12 @@
 //  Created by Despo on 25.10.24.
 //
 
+import UIKit
+import Foundation
+
 final class Movie_ViewModel {
-    private let movieArray = [
+    private var favouriteMovies = [Movie_Model]()
+    private var movieArray = [
         Movie_Model(
             poster: "alienPoster",
             backDrop: "AlienBackdrop",
@@ -224,7 +228,15 @@ final class Movie_ViewModel {
         movieArray[index]
     }
     
-    var popularMovie: [Movie_Model] {
-        movieArray.filter { $0.isPopular }
+    func favouritesButtonTapped(movie: Movie_Model) {
+        movie.isFaved.toggle()
+        if movie.isFaved {
+            favouriteMovies.append(movie)
+        } else {
+            favouriteMovies.removeAll { movie2 in
+                movie.title == movie2.title
+            }
+        }
     }
 }
+
