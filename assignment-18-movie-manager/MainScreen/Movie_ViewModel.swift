@@ -9,8 +9,8 @@ import UIKit
 import Foundation
 
 final class Movie_ViewModel {
-    private var favouriteMovies = [Movie_Model]()
-    private var delegate: FavouriteButtonTapped?
+    static var favouriteMovies = [Movie_Model]()
+    var delegate: FavouriteButtonTapped?
     private var movieArray = [
         Movie_Model(
             poster: "alienPoster",
@@ -230,21 +230,19 @@ final class Movie_ViewModel {
     }
     
     var favouriteMoviesCount: Int {
-        favouriteMovies.count
+        Movie_ViewModel.favouriteMovies.count
     }
     
     func singleFavouriteMovie(at index: Int) -> Movie_Model {
-        favouriteMovies[index]
+        Movie_ViewModel.favouriteMovies[index]
     }
     
     func favouritesButtonTapped(movie: Movie_Model) {
         movie.isFaved.toggle()
         if movie.isFaved {
-            favouriteMovies.append(movie)
+            Movie_ViewModel.favouriteMovies.append(movie)
         } else {
-            favouriteMovies.removeAll { movie2 in
-                movie.title == movie2.title
-            }
+            Movie_ViewModel.favouriteMovies.removeAll { $0.title == movie.title}
         }
         delegate?.reloadViewData()
     }

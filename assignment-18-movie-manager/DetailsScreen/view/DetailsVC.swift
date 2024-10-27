@@ -55,6 +55,7 @@ final class DetailsVC: UIViewController {
     }
     
     private var movie: Movie_Model
+    private var movieViewModel = Movie_ViewModel()
     
     init(backDropImage: UIImageView = UIImageView(), descriptionTextLable: UILabel = UILabel(), castLable: UILabel = UILabel(),  movie: Movie_Model) {
         self.backDropImage = backDropImage
@@ -186,7 +187,7 @@ final class DetailsVC: UIViewController {
         saveButton.imageView?.tintColor = .black
         
         saveButton.addAction(UIAction(handler: { [weak self] movie in
-            self?.movie.isFaved.toggle()
+            self?.movieViewModel.favouritesButtonTapped(movie: self!.movie)
             if self?.movie.isFaved == true {
                 self?.saveButton.setImage(saveImageFav, for: .normal)
             } else {

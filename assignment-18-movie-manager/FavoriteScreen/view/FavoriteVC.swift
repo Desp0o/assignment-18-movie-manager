@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-protocol FavouriteButtonTapped {
+protocol FavouriteButtonTapped: AnyObject {
     func reloadViewData()
 }
 
@@ -35,6 +35,11 @@ final class FavoriteVC: UIViewController {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
         setupUI()
+        movieViewModel.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        movieViewModel.delegate?.reloadViewData()
     }
     
     private func setupUI() {
@@ -94,7 +99,7 @@ extension FavoriteVC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let currentMovie = movieViewModel.singleMovie(at: indexPath.row)
+        let currentMovie = movieViewModel.singleFavouriteMovie(at: indexPath.row)
         
         let vc = DetailsVC(movie: currentMovie)
         vc.hidesBottomBarWhenPushed = true
@@ -104,7 +109,7 @@ extension FavoriteVC: UICollectionViewDataSource, UICollectionViewDelegate {
 }
 
 extension FavoriteVC: FavouriteButtonTapped {
-    func reloadViewData() {
+    func reloadViewData() { 
         movieViewModel.reloadCollectionView(collection: favouriteMoviesCollectionView)
     }
 }
