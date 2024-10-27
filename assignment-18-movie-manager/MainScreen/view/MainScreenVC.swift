@@ -8,10 +8,11 @@
 import UIKit
 
 class MainScreenVC: UIViewController {
-    let viewModel = Movie_ViewModel()
-    let tableStack = UIStackView()
-    let popularTitle = UILabel()
-    let tableView: UITableView = {
+    private let viewModel = Movie_ViewModel()
+    private let tableStack = UIStackView()
+    private let greyBar = CALayer()
+    private let popularTitle = UILabel()
+    private let tableView: UITableView = {
         let table = UITableView()
         table.backgroundColor = .clear
         table.separatorStyle = .none
@@ -19,7 +20,7 @@ class MainScreenVC: UIViewController {
         
         return table
     }()
-    let viewTitleLabel: UILabel = {
+    private let viewTitleLabel: UILabel = {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         title.text = "MovieMan"
@@ -29,7 +30,7 @@ class MainScreenVC: UIViewController {
         return title
     }()
     
-    let currentMovieTitle: UILabel = {
+    private let currentMovieTitle: UILabel = {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         title.text = "Now Showing"
@@ -38,12 +39,13 @@ class MainScreenVC: UIViewController {
         return title
     }()
     
-    let currentMoviesCollectionView: UICollectionView = {
+    private let currentMoviesCollectionView: UICollectionView = {
         let collectionLayout = UICollectionViewFlowLayout()
         let collection = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
         collectionLayout.itemSize = CGSize(width: 143, height: 283)
         collectionLayout.scrollDirection = .horizontal
         collectionLayout.minimumLineSpacing = 16
+        collectionLayout.sectionInset = .init(top: 0, left: 24, bottom: 0, right: 0)
         collection.backgroundColor = .clear
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
@@ -53,9 +55,17 @@ class MainScreenVC: UIViewController {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor =  .white
-
+        
+        setupGreyBar()
         setupMainView()
         setupTableStack()
+    }
+    
+    private func setupGreyBar() {
+        view.layer.addSublayer(greyBar)
+        let barWidth = view.bounds.width * 0.3
+        greyBar.backgroundColor = UIColor(named: "greyBar")?.cgColor
+        greyBar.frame = CGRect(x: 0, y: 0, width: barWidth, height: view.bounds.height)
     }
     
     func setupMainView() {
@@ -71,10 +81,8 @@ class MainScreenVC: UIViewController {
     
     func setMainViewTitleLabel() {
         NSLayoutConstraint.activate([
-            viewTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            viewTitleLabel.leftAnchor.constraint(equalTo: view.leftAnchor),
-            viewTitleLabel.rightAnchor.constraint(equalTo: view.rightAnchor),
-            viewTitleLabel.heightAnchor.constraint(equalToConstant: 60)
+            viewTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            viewTitleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 60)
         ])
     }
     
@@ -99,7 +107,7 @@ class MainScreenVC: UIViewController {
     func setCurrentMovieColletionView() {
         NSLayoutConstraint.activate([
             currentMoviesCollectionView.topAnchor.constraint(equalTo: currentMovieTitle.bottomAnchor, constant: 10),
-            currentMoviesCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
+            currentMoviesCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             currentMoviesCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
             currentMoviesCollectionView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 283/375),
         ])
