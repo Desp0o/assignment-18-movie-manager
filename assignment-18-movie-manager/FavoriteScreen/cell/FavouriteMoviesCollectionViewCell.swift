@@ -13,6 +13,15 @@ class FavouriteMoviesCollectionViewCell: UICollectionViewCell {
     private let titleLabel = UILabel()
     private let imdbLabel = UILabel()
     private let starImageView = UIImageView()
+    private let shadowContainer: UIView = {
+      let container = UIView()
+      container.translatesAutoresizingMaskIntoConstraints = false
+      container.layer.shadowOffset = CGSize(width: 0, height: 5)
+      container.layer.shadowRadius = 5
+      container.layer.shadowOpacity = 0.4
+      container.layer.shadowColor = UIColor.black.cgColor
+      return container
+  }()
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -72,9 +81,12 @@ class FavouriteMoviesCollectionViewCell: UICollectionViewCell {
     
     private func setupPosterView() {
         posterView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(posterView)
+        contentView.addSubview(shadowContainer)
+        shadowContainer.addSubview(posterView)
         posterView.contentMode = .scaleAspectFill
         
+        posterView.layer.cornerRadius = 10
+        posterView.clipsToBounds = true 
         
         NSLayoutConstraint.activate([
             posterView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -82,13 +94,6 @@ class FavouriteMoviesCollectionViewCell: UICollectionViewCell {
             posterView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             posterView.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -8),
         ])
-        
-        posterView.layer.cornerRadius = 10
-        
-        posterView.layer.shadowOffset = CGSize(width: 0, height: 5)
-        posterView.layer.shadowRadius = 5
-        posterView.layer.shadowOpacity = 0.4
-        posterView.layer.shadowColor = UIColor.black.cgColor
     }
     
     private func setupStarImageView() {
