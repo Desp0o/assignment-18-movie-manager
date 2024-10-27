@@ -44,6 +44,7 @@ class MainScreenVC: UIViewController {
         collectionLayout.itemSize = CGSize(width: 143, height: 283)
         collectionLayout.scrollDirection = .horizontal
         collectionLayout.minimumLineSpacing = 16
+        collectionLayout.sectionInset = .init(top: 0, left: 24, bottom: 0, right: 0)
         collection.backgroundColor = .clear
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
@@ -97,7 +98,7 @@ class MainScreenVC: UIViewController {
     func setCurrentMovieColletionView() {
         NSLayoutConstraint.activate([
             currentMoviesCollectionView.topAnchor.constraint(equalTo: currentMovieTitle.bottomAnchor, constant: 10),
-            currentMoviesCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
+            currentMoviesCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             currentMoviesCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
             currentMoviesCollectionView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 283/375),
         ])
