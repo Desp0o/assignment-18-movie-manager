@@ -9,7 +9,9 @@ import UIKit
 import Foundation
 
 final class Movie_ViewModel {
+    private let favouritesView = FavoriteVC()
     private var favouriteMovies = [Movie_Model]()
+    private var delegate: FavouriteButtonTapped?
     private var movieArray = [
         Movie_Model(
             poster: "alienPoster",
@@ -228,6 +230,14 @@ final class Movie_ViewModel {
         movieArray[index]
     }
     
+    var favouriteMoviesCount: Int {
+        favouriteMovies.count
+    }
+    
+    func singleFavouriteMovie(at index: Int) -> Movie_Model {
+        favouriteMovies[index]
+    }
+    
     func favouritesButtonTapped(movie: Movie_Model) {
         movie.isFaved.toggle()
         if movie.isFaved {
@@ -237,6 +247,11 @@ final class Movie_ViewModel {
                 movie.title == movie2.title
             }
         }
+        delegate?.reloadViewData()
+    }
+    
+    func reloadCollectionView(collection: UICollectionView) {
+        collection.reloadData()
     }
 }
 

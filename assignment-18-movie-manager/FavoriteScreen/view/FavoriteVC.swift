@@ -8,6 +8,10 @@
 import UIKit
 import Foundation
 
+protocol FavouriteButtonTapped {
+    func reloadViewData()
+}
+
 final class FavoriteVC: UIViewController {
     private let headerLabel = UILabel()
     private let greyBar = CALayer()
@@ -25,7 +29,7 @@ final class FavoriteVC: UIViewController {
         return collection
     }()
     
-    let movieViewModel = Movie_ViewModel()
+    private let movieViewModel = Movie_ViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,12 +83,12 @@ final class FavoriteVC: UIViewController {
 
 extension FavoriteVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        movieViewModel.numberOfMovie
+        movieViewModel.favouriteMoviesCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavouriteMoviesCollectionViewCell", for: indexPath) as! FavouriteMoviesCollectionViewCell
-            let currentMovie = movieViewModel.singleMovie(at: indexPath.row)
+        let currentMovie = movieViewModel.singleFavouriteMovie(at: indexPath.row)
             cell.configureCell(with: currentMovie)
         return cell
     }
@@ -96,5 +100,11 @@ extension FavoriteVC: UICollectionViewDataSource, UICollectionViewDelegate {
         vc.hidesBottomBarWhenPushed = true
         
         navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension FavoriteVC: FavouriteButtonTapped {
+    func reloadViewData() {
+        movieViewModel.reloadCollectionView(collection: favouriteMoviesCollectionView)
     }
 }

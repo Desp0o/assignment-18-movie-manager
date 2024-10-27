@@ -22,7 +22,6 @@ final class FavouriteMoviesCollectionViewCell: UICollectionViewCell {
       container.layer.shadowColor = UIColor.black.cgColor
       return container
   }()
-    private var delegate: FavouriteButtonTapped?
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
