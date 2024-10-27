@@ -92,7 +92,9 @@ final class DetailsVC: UIViewController {
     private func setUpbackDropImageView() {
         view.addSubview(backDropImage)
         backDropImage.translatesAutoresizingMaskIntoConstraints = false
+        backDropImage.contentMode = .scaleAspectFill
         view.bringSubviewToFront(backButton)
+
         
         NSLayoutConstraint.activate([
             backDropImage.topAnchor.constraint(equalTo: view.topAnchor),

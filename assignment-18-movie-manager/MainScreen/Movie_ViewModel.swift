@@ -13,6 +13,78 @@ final class Movie_ViewModel {
     var delegate: FavouriteButtonTapped?
     private var movieArray = [
         Movie_Model(
+            poster: "soulPoster",
+            backDrop: "soulBackdrop",
+            title: "Soul",
+            imdb: 7.3,
+            description: "While scavenging the deep ends of a derelict space station, a group of young space colonizers come face to face with the most terrifying life form in the universe.",
+            cast: [
+                Actor_Model(name: "Tom Holland", avatar: "tomHolland"),
+                Actor_Model(name: "Zendaya", avatar: "zendaya"),
+                Actor_Model(name: "Benedict", avatar: "benedict"),
+                Actor_Model(name: "Jacon", avatar: "jacon"),
+                Actor_Model(name: "Tom Holland", avatar: "tomHolland"),
+                Actor_Model(name: "Zendaya", avatar: "zendaya"),
+                Actor_Model(name: "Benedict", avatar: "benedict"),
+                Actor_Model(name: "Jacon", avatar: "jacon")
+            ],
+            duration: "1h 59m",
+            language: "English",
+            rating: "R",
+            genres: ["Sci-Fi", "Horror", "Thriller"],
+            isFaved: false,
+            isPopular: false
+        ),
+        
+        Movie_Model(
+            poster: "kingsmanPoster",
+            backDrop: "kingsmanBackdrop",
+            title: "Kingsman",
+            imdb: 7.3,
+            description: "While scavenging the deep ends of a derelict space station, a group of young space colonizers come face to face with the most terrifying life form in the universe.",
+            cast: [
+                Actor_Model(name: "Tom Holland", avatar: "tomHolland"),
+                Actor_Model(name: "Zendaya", avatar: "zendaya"),
+                Actor_Model(name: "Benedict", avatar: "benedict"),
+                Actor_Model(name: "Jacon", avatar: "jacon"),
+                Actor_Model(name: "Tom Holland", avatar: "tomHolland"),
+                Actor_Model(name: "Zendaya", avatar: "zendaya"),
+                Actor_Model(name: "Benedict", avatar: "benedict"),
+                Actor_Model(name: "Jacon", avatar: "jacon")
+            ],
+            duration: "1h 59m",
+            language: "English",
+            rating: "R",
+            genres: ["Sci-Fi", "Horror", "Thriller"],
+            isFaved: false,
+            isPopular: true
+        ),
+        
+        Movie_Model(
+            poster: "readyplayeronePoster",
+            backDrop: "readyplayeroneBackdrop",
+            title: "Soul",
+            imdb: 7.3,
+            description: "While scavenging the deep ends of a derelict space station, a group of young space colonizers come face to face with the most terrifying life form in the universe.",
+            cast: [
+                Actor_Model(name: "Tom Holland", avatar: "tomHolland"),
+                Actor_Model(name: "Zendaya", avatar: "zendaya"),
+                Actor_Model(name: "Benedict", avatar: "benedict"),
+                Actor_Model(name: "Jacon", avatar: "jacon"),
+                Actor_Model(name: "Tom Holland", avatar: "tomHolland"),
+                Actor_Model(name: "Zendaya", avatar: "zendaya"),
+                Actor_Model(name: "Benedict", avatar: "benedict"),
+                Actor_Model(name: "Jacon", avatar: "jacon")
+            ],
+            duration: "1h 59m",
+            language: "English",
+            rating: "R",
+            genres: ["Sci-Fi", "Horror", "Thriller"],
+            isFaved: false,
+            isPopular: false
+        ),
+        
+        Movie_Model(
             poster: "alienPoster",
             backDrop: "AlienBackdrop",
             title: "Alien",

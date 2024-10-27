@@ -72,6 +72,7 @@ final class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         poster.translatesAutoresizingMaskIntoConstraints = false
         poster.layer.masksToBounds = true
         poster.layer.cornerRadius = 8
+        poster.contentMode = .scaleAspectFill
         
         NSLayoutConstraint.activate([
             poster.widthAnchor.constraint(equalToConstant: 85),
@@ -114,16 +115,6 @@ final class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         let durationStack = generateStackWithIcon(iconName: "durationIcon", uiLabel: duration)
         movieInfoStack.addArrangedSubview(durationStack)
         durationStack.translatesAutoresizingMaskIntoConstraints = false
-        
-//        let space = UILabel()
-//        movieInfoStack.addArrangedSubview(space)
-//        space.backgroundColor = .cyan
-//        space.translatesAutoresizingMaskIntoConstraints = false
-//        space.heightAnchor.constraint(equalToConstant: 1).isActive = true
-//        space.leftAnchor.constraint(equalTo: movieInfoStack.leftAnchor).isActive = true
-//        space.rightAnchor.constraint(equalTo: movieInfoStack.rightAnchor).isActive = true
-
-
     }
 
     private func generateStackWithIcon(iconName: String, uiLabel: UILabel) -> UIStackView {

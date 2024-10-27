@@ -74,6 +74,7 @@ final class CurrentMoviesCollectionViewCell: UICollectionViewCell {
 
         movieImage.clipsToBounds = true
         movieImage.layer.cornerRadius = 8
+        movieImage.contentMode = .scaleAspectFill
         
         NSLayoutConstraint.activate([
             movieImgContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
