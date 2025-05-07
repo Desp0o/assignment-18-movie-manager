@@ -48,3 +48,12 @@ Team Members:
 
 If you have any questions or feedback regarding the project, feel free to contact us. Lead: Tornike Despotashvili - tornike.despotashvili@gmail.com
 
+### Screens
+
+<img src="https://github.com/user-attachments/assets/66877341-fb05-4ec6-830d-c4e55a3ba19e" alt="app screen" width="auto" height="450" />
+<img src="https://github.com/user-attachments/assets/b2e1bd0d-da4b-47d7-b136-2796b9a9daa8" alt="app screen" width="auto" height="450" />
+<img src="https://github.com/user-attachments/assets/5cc4cfd8-78c3-47d2-9a6b-402fc069aabd" alt="app screen" width="auto" height="450" />
+<img src="https://github.com/user-attachments/assets/acfeccb1-2507-4c74-8dce-6c09609b709b" alt="app screen" width="auto" height="450" />
+
+
+
